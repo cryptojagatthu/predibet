@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrediBet - Trade on What Matters</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <svg class="logo-icon" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="8" fill="url(#gradient1)"/>
+                    <path d="M16 8L24 16L16 24L8 16L16 8Z" fill="white" opacity="0.9"/>
+                    <defs>
+                        <linearGradient id="gradient1" x1="0" y1="0" x2="32" y2="32">
+                            <stop offset="0%" stop-color="#6366f1"/>
+                            <stop offset="100%" stop-color="#8b5cf6"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span class="logo-text">PrediBet</span>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="#" class="nav-link active">Markets</a>
+                <a href="#" class="nav-link">Categories</a>
+                <a href="https://github.com/cryptojagatthu/predibet" target="_blank" class="nav-link">About</a>
+            </div>
+            
+            <div class="nav-actions">
+                <div class="search-container">
+                    <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="2"/>
+                        <path d="M14 14L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <input type="text" id="searchInput" placeholder="Search markets..." class="search-input">
+                </div>
+                
+                <div class="api-status" id="apiStatus" title="API Status">
+                    <div class="status-dot"></div>
+                </div>
+                
+                <button class="icon-btn" id="settingsBtn" title="Settings">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M10 12.5C11.3807 12.5 12.5 11.3807 12.5 10C12.5 8.61929 11.3807 7.5 10 7.5C8.61929 7.5 7.5 8.61929 7.5 10C7.5 11.3807 8.61929 12.5 10 12.5Z" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M16.25 10C16.25 10.4167 16.2167 10.8167 16.1583 11.2083L18.3333 12.8333L16.6667 15.8333L14.1667 14.9167C13.5833 15.4167 12.9167 15.8333 12.1667 16.1167L11.6667 18.75H8.33333L7.83333 16.1167C7.08333 15.8333 6.41667 15.4167 5.83333 14.9167L3.33333 15.8333L1.66667 12.8333L3.84167 11.2083C3.78333 10.8167 3.75 10.4167 3.75 10C3.75 9.58333 3.78333 9.18333 3.84167 8.79167L1.66667 7.16667L3.33333 4.16667L5.83333 5.08333C6.41667 4.58333 7.08333 4.16667 7.83333 3.88333L8.33333 1.25H11.6667L12.1667 3.88333C12.9167 4.16667 13.5833 4.58333 14.1667 5.08333L16.6667 4.16667L18.3333 7.16667L16.1583 8.79167C16.2167 9.18333 16.25 9.58333 16.25 10Z" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <h1 class="hero-title">Trade on What Matters</h1>
+            <p class="hero-subtitle">Discover and trade on prediction markets powered by Polymarket</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="statTotalMarkets">--</div>
+                    <div class="stat-label">Total Markets</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statTotalVolume">--</div>
+                    <div class="stat-label">Total Volume</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statAvgProbability">--</div>
+                    <div class="stat-label">Avg Probability</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statVolume24h">--</div>
+                    <div class="stat-label">24h Volume</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="filters-section">
+        <div class="container">
+            <div class="filters-container">
+                <div class="filters-left">
+                    <select id="categoryFilter" class="filter-select">
+                        <option value="">All Categories</option>
+                    </select>
+                    
+                    <div class="volume-filter">
+                        <label for="volumeSlider" class="filter-label">Min Volume: $<span id="volumeValue">0</span></label>
+                        <input type="range" id="volumeSlider" class="volume-slider" min="0" max="100000" step="1000" value="0">
+                    </div>
+                    
+                    <select id="sortFilter" class="filter-select">
+                        <option value="volume">Volume (High to Low)</option>
+                        <option value="probability">Probability</option>
+                        <option value="latest">Latest</option>
+                    </select>
+                    
+                    <select id="limitFilter" class="filter-select">
+                        <option value="20">Show 20</option>
+                        <option value="50" selected>Show 50</option>
+                        <option value="100">Show 100</option>
+                    </select>
+                </div>
+                
+                <div class="filters-right">
+                    <div class="auto-refresh">
+                        <label class="toggle-label">
+                            <input type="checkbox" id="autoRefreshToggle" class="toggle-input">
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-text">Auto-refresh</span>
+                        </label>
+                    </div>
+                    
+                    <div class="view-toggle">
+                        <button class="view-btn active" data-view="grid" title="Grid View">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <rect x="2" y="2" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                                <rect x="12" y="2" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                                <rect x="2" y="12" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                                <rect x="12" y="12" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                            </svg>
+                        </button>
+                        <button class="view-btn" data-view="list" title="List View">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <rect x="2" y="3" width="16" height="2" rx="1" fill="currentColor"/>
+                                <rect x="2" y="9" width="16" height="2" rx="1" fill="currentColor"/>
+                                <rect x="2" y="15" width="16" height="2" rx="1" fill="currentColor"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="last-updated" id="lastUpdated">Last updated: Never</div>
+        </div>
+    </section>
+
+    <!-- Markets Section -->
+    <section class="markets-section">
+        <div class="container">
+            <div id="marketsGrid" class="markets-grid"></div>
+            <div id="marketsList" class="markets-list hidden"></div>
+            <div id="loadingState" class="loading-state hidden">
+                <div class="spinner"></div>
+                <p>Loading markets...</p>
+            </div>
+            <div id="emptyState" class="empty-state hidden">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                    <circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="2" opacity="0.2"/>
+                    <path d="M32 20V32L40 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <h3>No markets found</h3>
+                <p>Try adjusting your filters or search query</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Detail Modal -->
+    <div id="marketModal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalCloseBtn">&times;</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content settings-modal">
+            <button class="modal-close" id="settingsCloseBtn">&times;</button>
+            <h2>Settings</h2>
+            <div class="settings-body">
+                <div class="form-group">
+                    <label for="apiUrlInput" class="form-label">Backend API URL</label>
+                    <input type="text" id="apiUrlInput" class="form-input" placeholder="http://localhost:8080">
+                    <p class="form-hint">Enter the URL of your backend API server</p>
+                </div>
+                <div class="settings-actions">
+                    <button id="testConnectionBtn" class="btn btn-secondary">Test Connection</button>
+                    <button id="saveSettingsBtn" class="btn btn-primary">Save Settings</button>
+                    <button id="resetSettingsBtn" class="btn btn-outline">Reset to Default</button>
+                </div>
+                <div id="connectionStatus" class="connection-status hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollTopBtn" class="scroll-top-btn hidden">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M12 19V5M12 5L5 12M12 5L19 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About PrediBet</h3>
+                    <p>A modern frontend for Polymarket prediction markets, built to help you discover and analyze market trends.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Links</h3>
+                    <a href="https://github.com/cryptojagatthu/predibet" target="_blank" class="footer-link">GitHub Repository</a>
+                    <a href="https://docs.polymarket.com/" target="_blank" class="footer-link">Polymarket API Docs</a>
+                    <a href="https://polymarket.com" target="_blank" class="footer-link">Visit Polymarket</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Technology</h3>
+                    <p>Built with HTML, CSS, and vanilla JavaScript. Powered by Flask backend and Polymarket Gamma API.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 PrediBet. Open source project.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
