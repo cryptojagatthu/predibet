@@ -217,19 +217,16 @@ def process_market_data(markets):
     return processed
 
 
-@app.route("/", methods=["GET"])
-def home():
-    """Health check endpoint."""
-    return jsonify({
-        "service": "Polymarket Backend API",
-        "status": "running",
-        "endpoints": {
-            "/api/markets": "Get top 1000 live markets sorted by volume",
-            "/api/markets/top/{n}": "Get top N markets (default: 20)",
-            "/api/market/{id}": "Get single market by ID (coming soon)",
-            "/health": "Service health status"
-        }
-    }), 200
+# Frontend serving routes:
+@app.route("/")
+def serve_frontend():
+    return send_from_directory(app.static_folder, 'index.html')
+
+@app.route("/<path:path>")
+def serve_static_files(path):
+    if os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    return send_from_directory(app.static_folder, 'index.html')
 
 
 @app.route("/health", methods=["GET"])
