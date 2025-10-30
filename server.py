@@ -1,6 +1,7 @@
 """
 Enhanced Flask Backend for Polymarket Data
 Returns top 1000 live markets with comprehensive data.
+Serves static frontend files.
 Optimized for Render.com deployment with caching.
 """
 
@@ -8,14 +9,14 @@ import os
 import json
 import logging
 from datetime import datetime, timedelta
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 import requests
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("polymarket-backend")
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='')
 CORS(app)
 
 # Configuration
