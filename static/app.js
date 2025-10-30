@@ -1,6 +1,6 @@
 // Application State (in-memory storage)
 const appState = {
-    apiBaseUrl: 'http://localhost:8080',
+    apiBaseUrl: 'https://predibet.onrender.com',
     markets: [],
     filteredMarkets: [],
     categories: [],
