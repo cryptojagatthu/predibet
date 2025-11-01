@@ -9,7 +9,7 @@ const MarketGrid = () => {
   useEffect(() => {
     const fetchMarkets = async () => {
       try {
-        const res = await axios.get("https://predibet.onrender.com/api/markets");
+        const res = await axios.get("https://predibet.onrender.com/api/markets?limit=1000");
         setMarkets(res.data.markets.slice(0, 20));
       } catch (err) {
         console.error("Error fetching markets:", err);
