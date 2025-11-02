@@ -15,9 +15,9 @@ return (
 &lt;Header /&gt;
 &lt;main className="flex-1"&gt;
 {children}
-&lt;/main&gt;
-&lt;Footer /&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+<;/main>;
+<lt;Footer />;
+<;/body>;
+<;/html>;
 );
 }
